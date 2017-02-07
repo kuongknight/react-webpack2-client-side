@@ -1,0 +1,10 @@
+.idea/
+node_modules/
+dist/
+build/
+*.iml
+webpack-assets.json
+webpack-stats.json
+npm-debug.log
+/.happypack
+.vscode
