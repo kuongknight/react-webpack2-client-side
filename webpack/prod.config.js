@@ -4,6 +4,7 @@ const extend = require('extend')
 const AssetsPlugin = require('assets-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 const autoprefixer = require('autoprefixer')
 const INTL_REQUIRE_DESCRIPTIONS = true
 const isDebug = false
@@ -11,7 +12,7 @@ const isVerbose = true
 const config = {
   context: path.resolve(__dirname, '../src'),
   output: {
-    path: path.resolve(__dirname, '../build/public/assets'),
+    path: path.resolve(__dirname, '../build'),
     publicPath: '/assets/'
   },
   module: {
@@ -56,9 +57,9 @@ const config = {
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract({
-          fallbackLoader: 'style-loader',
-          loader: 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader!sass-loader'
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader!sass-loader'
         })
       },
       {
@@ -147,34 +148,31 @@ const clientConfig = extend(true, {}, config, {
         context: '../src'
       }
     }),
-    ...isDebug ? [
-      new webpack.HotModuleReplacementPlugin()
-    ] : [
-      new ExtractTextPlugin('style-[hash].css'),
-      new webpack.optimize.OccurrenceOrderPlugin(true),
-      new webpack.LoaderOptionsPlugin({
-        minimize: true,
-        debug: false
-      }),
-      new webpack.optimize.UglifyJsPlugin({
-        compress: {
-          screw_ie8: true, // React doesn't support IE8
-          warnings: isVerbose
-        },
-        mangle: {
-          screw_ie8: true
-        },
-        output: {
-          comments: false,
-          screw_ie8: true
-        }
-      }),
-      new HtmlWebpackPlugin({
-        title: 'My App'
-      })
-    ]
+    new ExtractTextPlugin('style-[hash].css'),
+    new webpack.optimize.OccurrenceOrderPlugin(true),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        screw_ie8: true, // React doesn't support IE8
+        warnings: isVerbose
+      },
+      mangle: {
+        screw_ie8: true
+      },
+      output: {
+        comments: false,
+        screw_ie8: true
+      }
+    }),
+    new HtmlWebpackPlugin({
+      title: 'My App'
+    }),
+    new CleanWebpackPlugin(['build'], {root: path.resolve(__dirname, '../')})
   ],
-  devtool: isDebug ? 'cheap-module-source-map' : false,
+  devtool: 'source-map',
   node: {
     fs: 'empty',
     net: 'empty',

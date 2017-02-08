@@ -19,12 +19,12 @@ if (!global.Intl) {
     // Add all large polyfills here
     'intl',
     'intl/locale-data/jsonp/en.js',
-    'intl/locale-data/jsonp/cs.js'
+    'intl/locale-data/jsonp/de.js'
   ], require => {
     // and require them here
     require('intl')
     require('intl/locale-data/jsonp/en.js')
-    require('intl/locale-data/jsonp/cs.js')
+    require('intl/locale-data/jsonp/de.js')
 
     run()
   }, 'polyfills')
