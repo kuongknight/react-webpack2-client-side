@@ -12,11 +12,9 @@ class Wellcome extends Component {
         <p className={s.intro}>
           KuongKnight create project
         </p>
-        <Link to={'/Notfound'}>To Notfound</Link>
-        <button className="btn btn-default" type="submit">Button</button>
-        <input className="btn btn-default" type="button" value="Input" />
-        <input className="btn btn-default" type="submit" value="Submit" />
-        <button type="button" className="btn btn-warning">Warning</button>
+        <Link to={'/Notfound'}>
+          <button type="button" className="btn btn-warning">NotFound</button>
+        </Link>
       </div>
     )
   }
