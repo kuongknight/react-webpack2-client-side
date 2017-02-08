@@ -5,6 +5,7 @@ const AssetsPlugin = require('assets-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const autoprefixer = require('autoprefixer')
 const INTL_REQUIRE_DESCRIPTIONS = true
 const isDebug = false
@@ -170,7 +171,11 @@ const clientConfig = extend(true, {}, config, {
     new HtmlWebpackPlugin({
       title: 'My App'
     }),
-    new CleanWebpackPlugin(['build'], {root: path.resolve(__dirname, '../')})
+    new CleanWebpackPlugin(['build'], {root: path.resolve(__dirname, '../')}),
+    new CopyWebpackPlugin([
+      { from: '../node_modules/bootstrap/dist/css', to: '../build' },
+      { from: '../node_modules/bootstrap/dist/fonts', to: '../build' },
+    ]),
   ],
   devtool: 'source-map',
   node: {

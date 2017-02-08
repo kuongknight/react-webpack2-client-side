@@ -3,6 +3,7 @@ const webpack = require('webpack')
 const extend = require('extend')
 const AssetsPlugin = require('assets-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const autoprefixer = require('autoprefixer')
 const INTL_REQUIRE_DESCRIPTIONS = true
 const config = {
@@ -41,10 +42,7 @@ const config = {
       },
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader'
-        })
+        use: [ 'style-loader', 'css-loader' ]
       },
       {
         test: /\.scss$/,
@@ -140,6 +138,10 @@ const clientConfig = extend(true, {}, config, {
       'process.env.BROWSER': true,
       __DEV__: true
     }),
+    new CopyWebpackPlugin([
+      { from: '../node_modules/bootstrap/dist/css' },
+      { from: '../node_modules/bootstrap/dist/fonts' },
+    ]),
     new AssetsPlugin({
       path: path.resolve(__dirname, '../build'),
       filename: 'assets.js',

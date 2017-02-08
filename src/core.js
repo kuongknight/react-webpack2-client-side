@@ -11,7 +11,6 @@ import App from './containers/App/App'
 import configureStore from './store/configureStore'
 import { ErrorReporter, deepForceUpdate } from './util/devUtils'
 import history from './util/history'
-
 [en, de].forEach(addLocaleData)
 
 const store = configureStore(window.APP_STATE, { history })
