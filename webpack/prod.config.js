@@ -3,6 +3,7 @@ const webpack = require('webpack')
 const extend = require('extend')
 const AssetsPlugin = require('assets-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const autoprefixer = require('autoprefixer')
 const INTL_REQUIRE_DESCRIPTIONS = true
 const isDebug = false
@@ -167,6 +168,9 @@ const clientConfig = extend(true, {}, config, {
           comments: false,
           screw_ie8: true
         }
+      }),
+      new HtmlWebpackPlugin({
+        title: 'My App'
       })
     ]
   ],
